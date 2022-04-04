@@ -1,0 +1,358 @@
+Team,Conference,value
+Texas A&M-CC,Southland,0.4008
+Abilene Christian,WAC,0.6528
+Air Force,MWC,0.179
+Akron,MAC,0.6992
+Alabama,SEC,0.8773
+Alabama A&M,SWAC,0.1747
+Alabama State,SWAC,0.1737
+Albany,Am. East,0.2706
+Alcorn State,SWAC,0.2128
+American University,Patriot,0.1265
+Appalachian State,Sunbelt,0.601
+Arizona,Pac 12,0.9704
+Arizona State,Pac 12,0.6706
+Arkansas-Pine Bluff,SWAC,0.0546
+Arkansas,SEC,0.9187
+Arkansas State,Sunbelt,0.5202
+Army,Patriot,0.3161
+Auburn,SEC,0.944
+Austin Peay,OVC,0.1925
+Ball State,MAC,0.3184
+Baylor,Big 12,0.9594
+Bellarmine,A-Sun,0.4504
+Belmont,OVC,0.8388
+Bethune-Cookman,SWAC,0.0992
+Binghamton,Am. East,0.262
+Boise State,MWC,0.8421
+Boston College,ACC,0.5801
+Boston University,Patriot,0.49370000000000003
+Bowling Green,MAC,0.2874
+Bradley,MVC,0.7532
+Brown,Ivy,0.4371
+Bryant,NEC,0.5304
+Bucknell,Patriot,0.1523
+Buffalo,MAC,0.6608
+Butler,Big East,0.5505
+BYU,WCC,0.7855
+Cal Poly,Big West,0.1956
+CSU Fullerton,Big West,0.5867
+California,Pac 12,0.5433
+California Baptist,WAC,0.4234
+Campbell,Big South,0.491
+Canisius,MAAC,0.318
+Central Arkansas,A-Sun,0.1369
+Central Connecticut,NEC,0.1103
+Central Michigan,MAC,0.1324
+Charleston Southern,Big South,0.0876
+Charlotte,C-USA,0.4818
+Chattanooga,Southern,0.8231
+Chicago State,WAC,0.0889
+Cincinnati,AAC,0.6818
+Clemson,ACC,0.7966
+Cleveland State,Horizon,0.6443
+Coastal Carolina,Sunbelt,0.6746
+Charleston,CAA,0.541
+Colgate,Patriot,0.7119
+Colorado,Pac 12,0.8064
+Colorado State,MWC,0.8287
+Columbia,Ivy,0.0855
+Coppin State,MEAC,0.266
+Cornell,Ivy,0.479
+Creighton,Big East,0.8128
+CSU Bakersfield,Big West,0.2394
+CSU Northridge,Big West,0.14
+Dartmouth,Ivy,0.3754
+Davidson,A-10,0.8302
+Dayton,A-10,0.8489
+Delaware,CAA,0.6517
+Delaware State,MEAC,0.0671
+Denver,Summit,0.249
+DePaul,Big East,0.7103
+Detroit Mercy,Horizon,0.3677
+Dixie State,WAC,0.2735
+Drake,MVC,0.7682
+Drexel,CAA,0.5456
+Duke,ACC,0.9682
+Duquesne,A-10,0.2289
+East Carolina,AAC,0.4175
+Eastern Illinois,OVC,0.0346
+Eastern Kentucky,A-Sun,0.3424
+Eastern Michigan,MAC,0.1905
+Eastern Washington,Big Sky,0.4275
+Elon,CAA,0.2043
+East Tennessee State,Southern,0.4517
+Evansville,MVC,0.1229
+Fairfield,MAAC,0.4732
+Fairleigh Dickinson,NEC,0.0833
+Florida Gulf Coast,A-Sun,0.5508
+Florida International,C-USA,0.2828
+Florida Atlantic,C-USA,0.6664
+Florida,SEC,0.8351
+Florida A&M,SWAC,0.1614
+Florida State,ACC,0.6767
+Fordham,A-10,0.4773
+Fresno State,MWC,0.7785
+Furman,Southern,0.7966
+Georgia Southern,Sunbelt,0.3224
+Gardner-Webb,Big South,0.564
+George Mason,A-10,0.6227
+George Washington,A-10,0.351
+Georgetown,Big East,0.4639
+Georgia,SEC,0.427
+Georgia State,Sunbelt,0.5081
+Georgia Tech,ACC,0.5078
+Gonzaga,WCC,0.9801
+Grambling,SWAC,0.1717
+Grand Canyon,WAC,0.7554
+Green Bay,Horizon,0.141
+Hampton,Big South,0.1702
+Hartford,Am. East,0.3371
+Harvard,Ivy,0.4134
+Hawai'i,Big West,0.555
+High Point,Big South,0.2839
+Hofstra,CAA,0.6137
+Holy Cross,Patriot,0.117
+Houston,AAC,0.9684
+Houston Baptist,Southland,0.1621
+Howard,MEAC,0.4586
+Idaho,Big Sky,0.1879
+Idaho State,Big Sky,0.1188
+Illinois,Big 10,0.9226
+Illinois State,MVC,0.4602
+Indiana,Big 10,0.8688
+Indiana State,MVC,0.3265
+Iona,MAAC,0.7984
+Iowa,Big 10,0.9464
+Iowa State,Big 12,0.8183
+IUPUI,Horizon,0.0229
+Jackson State,SWAC,0.1989
+Jacksonville,A-Sun,0.5159
+Jacksonville State,OVC,0.6456
+James Madison,CAA,0.4161
+Kansas,Big 12,0.9568
+Kansas City,WAC,0.4122
+Kansas State,Big 12,0.7558
+Kennesaw State,A-Sun,0.4439
+Kent State,MAC,0.63
+Kentucky,SEC,0.9631
+La Salle,A-10,0.3162
+Lafayette,Patriot,0.2472
+Lamar,WAC,0.0633
+Lehigh,Patriot,0.2478
+Liberty,A-Sun,0.7139
+Lipscomb,A-Sun,0.3494
+Little Rock,Sunbelt,0.169
+Long Island University,NEC,0.4065
+Loyola Marymount,WCC,0.3114
+Long Beach State,Big West,0.5838
+Longwood,Big South,0.7126
+Lafayette,Sunbelt,0.2472
+Louisiana Tech,C-USA,0.7331
+Louisville,ACC,0.569
+Loyola Chicago,MVC,0.8822
+Loyola MD,Patriot,0.3839
+LSU,SEC,0.928
+Maine,Am. East,0.076
+Manhattan,MAAC,0.3176
+Marist,MAAC,0.4591
+Marquette,Big East,0.8215
+Marshall,C-USA,0.3544
+Maryland,Big 10,0.7591
+UMass,A-10,0.4664
+McNeese,Southland,0.2144
+Memphis,AAC,0.8602
+Mercer,Southern,0.4521
+Merrimack,NEC,0.2605
+Miami,ACC,0.8649
+Miami OH,MAC,0.2973
+Michigan,Big 10,0.8688
+Michigan State,Big 10,0.8322
+Middle Tennessee,C-USA,0.7497
+Milwaukee,Horizon,0.1829
+Minnesota,Big 10,0.6457
+Mississippi State,SEC,0.851
+Mississippi Valley State,SWAC,0.0435
+Missouri,SEC,0.4669
+Missouri State,MVC,0.8068
+Monmouth,MAAC,0.5874
+Montana,Big Sky,0.3536
+Montana State,Big Sky,0.7117
+Morehead State,OVC,0.7166
+Morgan State,MEAC,0.2408
+Mount St. Mary's,NEC,0.3785
+Murray State,OVC,0.9005
+North Carolina A&T,MEAC,0.2492
+North Carolina Central,MEAC,0.2352
+Navy,Patriot,0.5843
+NC State,ACC,0.6118
+Nebraska,Big 10,0.5988
+Nevada,MWC,0.5446
+New Hampshire,Am. East,0.436
+New Mexico,MWC,0.5181
+New Mexico State,WAC,0.7906
+New Orleans,Southland,0.4028
+Niagara,MAAC,0.5082
+Nicholls,Southland,0.4837
+NJIT,Am. East,0.1642
+Norfolk State,MEAC,0.6379
+North Alabama,A-Sun,0.1728
+North Carolina,ACC,0.9122
+North Dakota,Summit,0.0932
+North Dakota State,Summit,0.5522
+North Florida,A-Sun,0.2427
+North Texas,C-USA,0.8686
+Northeastern,CAA,0.3237
+Northern Arizona,Big Sky,0.141
+Northern Colorado,Big Sky,0.4797
+Northern Illinois,MAC,0.1878
+Northern Kentucky,Horizon,0.5797
+Northwestern,Big 10,0.7067
+Northwestern State,Southland,0.155
+Notre Dame,ACC,0.8548
+Oakland,Horizon,0.6264
+Ohio,MAC,0.7273
+Ohio State,Big 10,0.894
+Oklahoma,Big 12,0.8635
+Oklahoma State,Big 12,0.8656
+Old Dominion,C-USA,0.4701
+Ole Miss,SEC,0.6717
+Omaha,Summit,0.0942
+Oral Roberts,Summit,0.5536
+Oregon,Pac 12,0.7883
+Oregon State,Pac 12,0.3145
+Pacific,WCC,0.198
+Pennsylvania,Ivy,0.3511
+Penn State,Big 10,0.7058
+Pepperdine,WCC,0.1906
+Pittsburgh,ACC,0.4631
+Portland,WCC,0.4622
+Portland State,Big Sky,0.3377
+Prairie View A&M,SWAC,0.171
+Presbyterian,Big South,0.2825
+Princeton,Ivy,0.6928
+Providence,Big East,0.8905
+Purdue,Big 10,0.9488
+Purdue Fort Wayne,Summit,0.4743
+Quinnipiac,MAAC,0.3944
+Radford,Big South,0.2223
+Rhode Island,A-10,0.6128
+Rice,C-USA,0.4518
+Richmond,A-10,0.7405
+Rider,MAAC,0.3402
+Robert Morris,NEC,0.2155
+Rutgers,Big 10,0.7558
+Sacramento State,Big Sky,0.2197
+Sacred Heart,NEC,0.1762
+St. Francis PA,NEC,0.1975
+Saint Joseph's,A-10,0.4309
+Saint Louis,A-10,0.7824
+Saint Mary's,WCC,0.8982
+Saint Peter's,MAAC,0.7238
+Sam Houston,WAC,0.5365
+Samford,Southern,0.4508
+San Diego,WCC,0.3026
+San Diego State,MWC,0.8561
+San Francisco,WCC,0.8838
+San JosÃ© State,MWC,0.1365
+Santa Clara,WCC,0.8029
+Seattle U,WAC,0.6611
+Seton Hall,Big East,0.8209
+Stephen F. Austin,WAC,0.6627
+Siena,MAAC,0.3749
+SIU Edwardsville,OVC,0.2723
+SMU,AAC,0.8267
+South Alabama,Sunbelt,0.6061
+South Carolina,SEC,0.6832
+South Carolina State,MEAC,0.2165
+South Dakota,Summit,0.4545
+South Dakota State,Summit,0.8391
+South Florida,AAC,0.2449
+Southeast Missouri State,OVC,0.3853
+SE Louisiana,Southland,0.3955
+USC,Pac 12,0.8569
+Southern Illinois,MVC,0.5765
+Southern Miss,C-USA,0.1199
+Southern,SWAC,0.413
+Southern Utah,Big Sky,0.5734
+St. Bonaventure,A-10,0.7495
+St. Francis BKN,NEC,0.1922
+St. John's,Big East,0.8322
+Stanford,Pac 12,0.6311
+Stetson,A-Sun,0.2091
+Stony Brook,Am. East,0.4536
+Syracuse,ACC,0.808
+Tarleton,WAC,0.39
+TCU,Big 12,0.847
+Temple,AAC,0.5721
+Tennessee,SEC,0.9599
+Tennessee State,OVC,0.2992
+Tennessee Tech,OVC,0.3412
+Texas,Big 12,0.9243
+Texas A&M,SEC,0.8589
+Texas Southern,SWAC,0.4256
+Texas State,Sunbelt,0.5929
+Texas Tech,Big 12,0.9571
+The Citadel,Southern,0.3658
+Toledo,MAC,0.7993
+Towson,CAA,0.7819
+Troy,Sunbelt,0.51
+Tulane,AAC,0.7119
+Tulsa,AAC,0.4083
+UAB,C-USA,0.8796
+UC Davis,Big West,0.4017
+UC Irvine,Big West,0.5914
+UC Riverside,Big West,0.5313
+UC San Diego,Big West,0.3057
+UC Santa Barbara,Big West,0.6708
+UCF,AAC,0.629
+UCLA,Pac 12,0.9548
+UConn,Big East,0.9224
+UIC,Horizon,0.2716
+Incarnate Word,Southland,0.1021
+UL Monroe,Sunbelt,0.2177
+UMass Lowell,Am. East,0.3916
+UMBC,Am. East,0.4758
+Maryland-Eastern Shore,MEAC,0.2121
+UNC Asheville,Big South,0.5221
+UNC Greensboro,Southern,0.4953
+UNC Wilmington,CAA,0.5572
+Northern Iowa,MVC,0.7263
+UNLV,MWC,0.6609
+South Carolina Upstate,Big South,0.2851
+UT Arlington,Sunbelt,0.2952
+UT Martin,OVC,0.2064
+Utah,Pac 12,0.5962
+Utah State,MWC,0.7608
+Utah Valley,WAC,0.6788
+UTEP,C-USA,0.5888
+UT Rio Grande Valley,WAC,0.2142
+UTSA,C-USA,0.1404
+Valparaiso,MVC,0.4261
+Vanderbilt,SEC,0.8305
+VCU,A-10,0.8187
+Vermont,Am. East,0.9068
+Villanova,Big East,0.9571
+Virginia,ACC,0.8189
+Virginia Tech,ACC,0.9086
+VMI,Southern,0.5
+Wagner,NEC,0.6631
+Wake Forest,ACC,0.8808
+Washington,Pac 12,0.683
+Washington State,Pac 12,0.884
+Weber State,Big Sky,0.6654
+West Virginia,Big 12,0.7959
+Western Carolina,Southern,0.1839
+Western Illinois,Summit,0.3894
+Western Kentucky,C-USA,0.713
+Western Michigan,MAC,0.1332
+Wichita State,AAC,0.7467
+William & Mary,CAA,0.1098
+Winthrop,Big South,0.6663
+Wisconsin,Big 10,0.8724
+Wofford,Southern,0.6789
+Wright State,Horizon,0.6244
+Wyoming,MWC,0.7839
+Xavier,Big East,0.8906
+Yale,Ivy,0.5855
+Youngstown State,Horizon,0.4328

@@ -1,0 +1,375 @@
+---
+title: "assists"
+output: html_document
+---
+```{r setup}
+library(tidyverse)
+library(ncaahoopR)
+devtools::install_github("jflancer/bigballR")
+```
+
+# ```{r setup, include=FALSE}
+# knitr::opts_chunk$set(warning = TRUE, message = TRUE)
+# devtools::install_github("lbenz730/ncaahoopR")
+# ```
+  
+
+```{r}
+dict$hoopr_folder = dict$ESPN
+dict$hoopr = dict$ESPN_PBP
+
+dict[[11]][153] = 'Loyola MD'
+dict[[11]][16] = 'Arkansas State'
+dict[[11]][38]  = 'CSU Fullerton'
+dict[[11]][102] = 'Georgia State'
+dict[[11]][133] = 'Kansas City'
+dict[[11]][144] = 'Little Rock'
+dict[[11]][161] = 'UMass'
+dict[[11]][10] = 'American University'
+dict[[11]][40] = 'California Baptist'
+dict[[11]][162] = 'McNeese'
+dict[[11]][167] = 'Miami OH'
+dict[[11]][182] = "Mount St. Mary's"
+dict[[11]][231] = 'Presbyterian'
+dict[[11]][246] = 'St. Francis PA'
+dict[[11]][251] = 'Sam Houston'
+dict[[11]][256] = 'San JosÃ© State'
+dict[[11]][278] = 'St. Francis BKN'
+dict[[11]][280] = 'St. Thomas - Minnesota'
+dict[[11]][310] = 'UConn'
+dict[[11]][313] = 'UL Monroe'
+dict[[11]][330] = 'UTSA'
+```
+
+```{r}
+#Get yearly data from previous years
+handle_box <- function(id, team_path, team) {
+  box <- read_csv(paste0(team_path, "/", id), show_col_types = FALSE) %>% 
+    filter({if('player' %in% names(.)) player else NULL} == "TEAM") %>% 
+    # filter(player == "TEAM") %>% 
+    mutate(Team = team, date=date)
+}
+
+get_team <- function(team) {
+  team_path <-  paste0(path, "/", team)
+  imap(list.files(path = team_path), ~handle_box(.x,team_path, team)) %>% 
+  reduce(rbind) %>% 
+    group_by(Team)
+    # summarise_if(is.numeric, sum) %>% 
+    # complete(Team)
+}
+
+substrRight <- function(x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
+
+dirs <- grep(list.dirs("./ncaahoopR_data", recursive = FALSE), pattern = "git", invert=TRUE, value=TRUE)
+years <- substrRight(dirs,7)
+
+ncaahoopr_avgs_all <- data.frame()
+ncaahoopr_games_all <- data.frame()
+
+#For testing
+years <- c("2021-22")
+
+#For updating one year
+# ncaahoopr_avgs_all <- ncaahoopr_avgs_all %>%
+#   filter(year != "2021-22")
+
+# ncaahoopr_games_all <- ncaahoopr_games_all %>%
+#   filter(year != "2021-22")
+
+for(year in years) {
+  path <- paste0("./ncaahoopR_data/",year,"/box_scores")
+  
+  ncaahoopr_games <- lapply(list.files(path = path), get_team) %>% 
+    reduce(rbind) %>% 
+    select(-MIN)  %>% 
+    mutate(Team = gsub("_", " ", Team)) %>% 
+    mutate(Team = dict$hoopr[dict$hoopr_folder == Team]) %>% 
+    mutate(year=year)
+  
+  ncaahoopr_off <- ncaahoopr_games %>% 
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(Team) %>% 
+    summarise_if(is.numeric, sum) %>% 
+    group_by(Team) %>% 
+    summarise(across(FGM:PTS, ~./POSS))
+  
+  ncaahoopr_def <- ncaahoopr_games %>% 
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(opponent) %>% 
+    summarise_if(is.numeric, sum) %>% 
+    group_by(opponent) %>% 
+    summarise(across(FGM:PTS, ~./POSS)) %>% 
+    rename(Team = opponent)
+  
+  ncaahoopr_avgs <- ncaahoopr_off %>% 
+    inner_join(ncaahoopr_def, by=c("Team"),  suffix = c("", "_D")) %>% 
+    mutate(year = year, result = sign(PTS > PTS_D))
+  
+  ncaahoopr_games_all <- ncaahoopr_games %>% 
+    rbind(ncaahoopr_games_all)
+  ncaahoopr_avgs_all <- ncaahoopr_avgs %>%
+    rbind(ncaahoopr_avgs_all)
+}
+
+save(ncaahoopr_avgs_all, file="team_against_avg_all.rData")
+save(ncaahoopr_games_all, file="ncaahoopr_games_all.rData")
+```
+
+```{r}
+# Create features for each team in previous years
+power_conferences <- c("Pac 12", "Big 10", "Big 12", "Big East", "SEC", "ACC")
+team_against_avg_all <- data_frame()
+for(test_year in years) {
+  
+  #for testing
+  # test_year <- "2018-19"
+  
+  ncaahoopr_games <- ncaahoopr_games_all %>% 
+    filter(year == test_year)
+  #How teams game offense did against opponents avg def
+  team_off_against_avg_def <- ncaahoopr_games %>% 
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(Team, opponent,date, year) %>% 
+    summarise(across(FGM:PTS, ~./POSS)) %>% 
+    inner_join(ncaahoopr_avgs_all, by = c("opponent" = "Team", "year"), suffix = c("", "_opp_avg")) %>% 
+    mutate(FGM = FGM - FGM_D,
+           FGA = FGA - FGA_D,
+           `3PTM` = `3PTM` - `3PTM_D`,
+           `3PTA` = `3PTA` - `3PTA_D`,
+           FTA = FTA - FTA_D,
+           FTM = FTM - FTM_D,
+           OREB = OREB - OREB_D,
+           DREB = DREB - DREB_D,
+           REB = REB - REB_D,
+           STL = STL - STL_D,
+           BLK = BLK - BLK_D,
+           AST = AST - AST_D,
+           TO = TO - TO_D,
+           PF = PF - PF_D,
+           PTS = PTS - PTS_D) %>% 
+    select(-ends_with("opp_avg"), -ends_with("_D"))
+  
+  #How teams defense did against teams avg offense
+  team_def_against_avg_off <- ncaahoopr_games %>%
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(opponent, Team, date, year) %>%
+    summarise(across(FGM:PTS, ~./POSS)) %>%
+    inner_join(ncaahoopr_avgs_all, by = c("Team" = "Team", "year"), suffix = c("", "_opp_avg")) %>%
+    mutate(FGM = FGM_opp_avg - FGM,
+           FGA = FGA_opp_avg - FGA,
+           `3PTM` = `3PTM_opp_avg` - `3PTM`,
+           `3PTA` = `3PTA_opp_avg` - `3PTA`,
+           FTA = FTA_opp_avg - FTA,
+           FTM = FTM_opp_avg - FTM,
+           OREB = OREB_opp_avg - OREB,
+           DREB = DREB_opp_avg - DREB,
+           REB = REB_opp_avg - REB,
+           STL = STL_opp_avg - STL,
+           BLK =  BLK_opp_avg - BLK,
+           AST = AST_opp_avg - AST,
+           TO = TO_opp_avg - TO,
+           PF = PF_opp_avg - PF,
+           PTS = PTS_opp_avg - PTS) %>%
+    select(-ends_with("opp_avg"), -ends_with("_D"))
+  
+  team_against_avg <- team_off_against_avg_def %>%
+    inner_join(team_def_against_avg_off, by=c("Team" = "opponent", "year"), suffix=c("_off", "_def")) %>% 
+    group_by(Team) %>% 
+    summarise_if(is.numeric, mean) %>% 
+    mutate(year = test_year)
+  
+  team_against_avg_all <- team_against_avg %>% rbind(team_against_avg_all)
+  team_against_avg_all <- dict %>%
+    tibble() %>% 
+    select(conference, hoopr) %>% 
+    inner_join(team_against_avg_all, by= c('hoopr' = 'Team')) %>% 
+    mutate(Team = hoopr, Conference = conference, power_conf = conference %in% power_conferences)
+  # ncaahoopr_games %>%
+  #   group_by(Team,year) %>% 
+  #   summarise_at(c('FGM', '3PTM', 'FGA', 'TO', 'FTA'),sum) %>% 
+  #   mutate(EFG =(FGM + (0.5*`3PTM`))/FGA,
+  #          TR =TO/(FGA+ 0.44*FTA + TO),
+  #          FTR=FTA/FGA) %>% 
+  #   select(-c(FGM,`3PTM`, FGA,TO,FTA)) %>% 
+  #   inner_join(team_against_avg_all, by=c('Team', 'year'))
+}
+
+write.csv(team_against_avg_all, file="./betting_app/team_data.csv")
+save(team_against_avg_all, file="team_against_avg_all.rData")
+
+```
+
+```{r}
+team_off_against_avg_def_recent <- ncaahoopr_games %>% 
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(Team, year) %>% 
+    arrange(Team, date) %>% 
+    slice(tail(row_number(), 8)) %>% 
+    group_by(Team, opponent,date, year) %>% 
+    summarise(across(FGM:PTS, ~./POSS)) %>% 
+    inner_join(ncaahoopr_avgs_all, by = c("opponent" = "Team", "year"), suffix = c("", "_opp_avg")) %>% 
+    mutate(FGM = FGM - FGM_D,
+           FGA = FGA - FGA_D,
+           `3PTM` = `3PTM` - `3PTM_D`,
+           `3PTA` = `3PTA` - `3PTA_D`,
+           FTA = FTA - FTA_D,
+           FTM = FTM - FTM_D,
+           OREB = OREB - OREB_D,
+           DREB = DREB - DREB_D,
+           REB = REB - REB_D,
+           STL = STL - STL_D,
+           BLK = BLK - BLK_D,
+           AST = AST - AST_D,
+           TO = TO - TO_D,
+           PF = PF - PF_D,
+           PTS = PTS - PTS_D) %>% 
+    select(-ends_with("opp_avg"), -ends_with("_D"))
+
+#How teams defense did against teams avg offense
+  team_def_against_avg_off_recent <- ncaahoopr_games %>%
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(Team, year) %>% 
+    arrange(Team, date) %>% 
+    slice(tail(row_number(), 8)) %>% 
+    group_by(opponent, Team, date, year) %>% 
+    summarise(across(FGM:PTS, ~./POSS)) %>%
+    inner_join(ncaahoopr_avgs_all, by = c("Team" = "Team", "year"), suffix = c("", "_opp_avg")) %>%
+    mutate(FGM = FGM_opp_avg - FGM,
+           FGA = FGA_opp_avg - FGA,
+           `3PTM` = `3PTM_opp_avg` - `3PTM`,
+           `3PTA` = `3PTA_opp_avg` - `3PTA`,
+           FTA = FTA_opp_avg - FTA,
+           FTM = FTM_opp_avg - FTM,
+           OREB = OREB_opp_avg - OREB,
+           DREB = DREB_opp_avg - DREB,
+           REB = REB_opp_avg - REB,
+           STL = STL_opp_avg - STL,
+           BLK =  BLK_opp_avg - BLK,
+           AST = AST_opp_avg - AST,
+           TO = TO_opp_avg - TO,
+           PF = PF_opp_avg - PF,
+           PTS = PTS_opp_avg - PTS) %>%
+    select(-ends_with("opp_avg"), -ends_with("_D"))
+  
+  team_against_avg_recent <- team_off_against_avg_def_recent %>%
+    inner_join(team_def_against_avg_off_recent, by=c("Team" = "opponent", "year"), suffix=c("_off", "_def")) %>% 
+    group_by(Team) %>% 
+    summarise_if(is.numeric, mean) %>% 
+    mutate(year = test_year)
+  
+  team_against_avg_recent <- dict %>%
+    tibble() %>% 
+    select(conference, hoopr) %>% 
+    inner_join(team_against_avg_recent, by= c('hoopr' = 'Team')) %>% 
+    mutate(Team = hoopr, Conference = conference, power_conf = conference %in% power_conferences)
+
+write.csv(team_against_avg_recent, file="./betting_app/team_data_recent.csv")
+save(team_against_avg_recent, file="team_against_avg_all_recent.rData")
+```
+
+
+```{r} 
+#Create dataset
+X <- ncaahoopr_games_all %>% 
+  inner_join(ncaahoopr_games_all, by = c("Team" = "opponent", "date")) %>% 
+  select("Team", "Team.y", "PTS.x", "PTS.y", "date", "year.x", "location.x") %>%
+  mutate(result = sign(PTS.x > PTS.y)) %>% 
+  inner_join(team_against_avg_all, by = c("Team", "year.x" = "year")) %>% 
+  inner_join(team_against_avg_all, by = c("Team.y" = "Team", "year.x" = "year")) %>% 
+  mutate(
+    exp_off_FGM = FGM_off.x - FGM_def.y,
+    exp_off_FGA = FGA_off.x - FGA_def.y,
+    exp_off_3PTM = `3PTM_off.x` - `3PTM_def.y`,
+    exp_off_3PTA = `3PTA_off.x` - `3PTA_def.y`,
+    exp_off_FTA = FTA_off.x - FTA_def.y,
+    exp_off_FTM = FTM_off.x - FTM_def.y,
+    exp_off_OREB = OREB_off.x - OREB_def.y,
+    exp_off_DREB = DREB_off.x - DREB_def.y,
+    exp_off_REB = REB_off.x - REB_def.y,
+    exp_off_AST = AST_off.x - AST_def.y,
+    exp_off_STL = STL_off.x - STL_def.y,
+    exp_off_BLK = BLK_off.x - BLK_def.y,
+    exp_off_TO = TO_off.x - TO_def.y,
+    exp_off_PF = PF_off.x - PF_def.y,
+    exp_off_PTS = PTS_off.x - PTS_def.y,
+    
+    exp_def_FGM = FGM_def.x - FGM_off.y,
+    exp_def_FGA = FGA_def.x - FGA_off.y,
+    exp_def_3PTM = `3PTM_def.x` - `3PTM_off.y`,
+    exp_def_3PTA = `3PTA_def.x` - `3PTA_off.y`,
+    exp_def_FTA = FTA_def.x - FTA_off.y,
+    exp_def_FTM = FTM_def.x - FTM_off.y,
+    exp_def_OREB = OREB_def.x - OREB_off.y,
+    exp_def_DREB = DREB_def.x - DREB_off.y,
+    exp_def_REB = REB_def.x - REB_off.y,
+    exp_def_AST = AST_def.x - AST_off.y,
+    exp_def_STL = STL_def.x - STL_off.y,
+    exp_def_BLK = BLK_def.x - BLK_off.y,
+    exp_def_TO = TO_def.x - TO_off.y,
+    exp_def_PF = PF_def.x - PF_off.y,
+    exp_def_PTS = PTS_def.x - PTS_off.y,
+  ) %>% 
+  select("Team", "Team.y", "PTS.x", "PTS.y", "date", "year.x", "location.x","result", starts_with("exp"))
+
+write.csv(X, "data.csv")
+```
+
+```{r}
+
+  ncaahoopr_games <- lapply(list.files(path = path), get_team) %>% 
+    reduce(rbind) %>% 
+    select(-MIN)  %>% 
+    mutate(Team = gsub("_", " ", Team)) %>% 
+    mutate(Team = dict$hoopr[dict$hoopr_folder == Team]) %>% 
+    mutate(year=year)
+  
+  ncaahoopr_off <- ncaahoopr_games %>% 
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(Team, year) %>%
+    summarise_if(is.numeric,cumsum) %>% 
+    group_by(Team, year) %>% 
+    summarise(across(FGM:PTS, ~./POSS)) %>% 
+    mutate(r = row_number())
+    
+    
+    ncaahoopr_games %>% 
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(Team) %>% 
+    mutate_if(is.numeric, cumsum)
+    # summarise_if(is.numeric, cumsum)
+
+  
+  ncaahoopr_def <- ncaahoopr_games %>% 
+    mutate(POSS = (FGA -OREB) + TO + (.44 * FTA))  %>%
+    group_by(opponent) %>% 
+    summarise_if(is.numeric, sum) %>% 
+    group_by(opponent) %>% 
+    summarise(across(FGM:PTS, ~./POSS)) %>% 
+    rename(Team = opponent)
+  
+  ncaahoopr_avgs <- ncaahoopr_off %>% 
+    inner_join(ncaahoopr_def, by=c("Team"),  suffix = c("", "_D")) %>% 
+    mutate(year = year, result = sign(PTS > PTS_D))
+  
+```
+
+```{r}
+  teams_df %>% arrange(dPoss)
+```
+
+```{r}
+teams_df <- load("~/Documents/dataScience/basketball/basketball/teams_df.RData")
+```
+
+```{r}
+save(teams_df, file = "teams_df_2021_2022.RData")
+```
+
+```{r}
+data("dict")
+write.csv(dict, "team_names.csv")
+```
+
